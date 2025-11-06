@@ -14,10 +14,13 @@ streamlit
 
 # LangGraph and LLM dependencies
 langgraph
-langchain
-langchain-google-genai
-langchain-core
-google-generativeai
+langchain==0.2.14
+langchain-core==0.2.34
+langchain-google-genai==1.0.7
+google-generativeai==0.7.2
+
+
+
 
 # API Server dependencies
 fastapi
@@ -38,4 +41,3 @@ pyzbar
 
 
 
-#
