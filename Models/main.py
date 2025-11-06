@@ -144,8 +144,8 @@ app = FastAPI(
 # CORS middleware - configured for Next.js communication (local + production)
 # Production: set FRONTEND_URL to your frontend origin (e.g. https://app.example.com)
 # Optionally set FRONTEND_ORIGIN_REGEX to allow wildcard origins (e.g. r"https://.*\.vercel\.app")
-frontend_origin = os.getenv("FRONTEND_URL")
-frontend_origin_regex = os.getenv("FRONTEND_ORIGIN_REGEX")
+frontend_origin = "https://sotrian.vercel.app"
+frontend_origin_regex = "https://sotrian.vercel.app"
 
 default_dev_origins = [
     "http://localhost:3000",      # Local Next.js development
