@@ -1,0 +1,12 @@
+# Top-level .gitignore for the workspace (root)
+
+# Ignore Python virtual environments inside Models
+Models/env/
+Models/.env
+
+# Ignore node_modules inside the Katalyst project folder
+Katalyst/node_modules/
+
+
+# You can add more workspace-level ignores here if needed
+# e.g. __pycache__/

@@ -1,0 +1,41 @@
+PyPDF2
+altair
+seaborn
+nltk
+wordcloud
+xgboost
+scipy
+pandas
+numpy
+matplotlib
+scikit-learn
+joblib
+streamlit
+
+# LangGraph and LLM dependencies
+langgraph
+langchain
+langchain-google-genai
+langchain-core
+google-generativeai
+
+# API Server dependencies
+fastapi
+uvicorn[standard]
+# Additional utilities
+pydantic
+python-dotenv
+aiohttp
+
+pydantic-settings
+python-multipart
+
+
+requests
+opencv-python 
+numpy
+pyzbar
+
+
+
+#
