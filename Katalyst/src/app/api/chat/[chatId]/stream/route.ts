@@ -96,7 +96,7 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
 
     // Create streaming response
     const encoder = new TextEncoder();
-    const FASTAPI_URL = process.env.FASTAPI_URL || 'http://localhost:8000';
+    const FASTAPI_URL = process.env.FASTAPI_URL || 'https://sotrian-i62d.onrender.com';
 
     const stream = new ReadableStream({
       async start(controller) {
