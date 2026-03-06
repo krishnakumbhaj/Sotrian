@@ -142,8 +142,8 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
           }),
           signal: AbortSignal.timeout(120_000), // 120s timeout
         });
-      } catch (fetchError: any) {
-        const msg = fetchError?.message || String(fetchError);
+      } catch (fetchError: unknown) {
+        const msg = fetchError instanceof Error ? fetchError.message : String(fetchError);
         if (msg.includes('fetch failed') || msg.includes('ECONNREFUSED') || msg.includes('timeout')) {
           throw new Error(
             `Cannot reach FastAPI server at ${FASTAPI_URL}. ` +

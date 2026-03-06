@@ -28,10 +28,10 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
     }
 
     // Parse body safely (handle empty body gracefully)
-    let body: any = null;
+    let body: Record<string, unknown> | null = null;
     try {
       body = await request.json();
-    } catch (e) {
+    } catch {
       console.warn('save-partial: empty or invalid JSON body');
       return new Response('Invalid or empty body', { status: 400 });
     }

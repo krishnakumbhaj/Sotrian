@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../../../auth/[...nextauth]/options';
 import dbConnect from '@/lib/dbConnect';
-import ChatModel from '@/models/Chat';
+import ChatModel, { Message } from '@/models/Chat';
 import UserModel from '@/models/User';
 import { Types } from 'mongoose';
 
@@ -29,10 +29,10 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
     }
 
     // Parse body safely
-    let body: any = null;
+    let body: Record<string, unknown> | null = null;
     try {
       body = await request.json();
-    } catch (e) {
+    } catch {
       return new Response('Invalid or empty body', { status: 400 });
     }
 
@@ -53,7 +53,7 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
     }
 
     // Find the message and ensure it's a user message
-    const msgIndex = chat.messages.findIndex((m: any) => m.id === messageId);
+    const msgIndex = chat.messages.findIndex((m: Message) => m.id === messageId);
     if (msgIndex === -1) {
       return new Response('Message not found', { status: 404 });
     }

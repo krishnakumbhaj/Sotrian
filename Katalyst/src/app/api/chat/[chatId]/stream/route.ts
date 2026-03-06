@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../../auth/[...nextauth]/options';
 import dbConnect from '@/lib/dbConnect';
-import ChatModel, { FraudDetectionResult } from '@/models/Chat';
+import ChatModel, { FraudDetectionResult, Message } from '@/models/Chat';
 import UserModel from '@/models/User';
 import { Types } from 'mongoose';
 import { decryptApiKey } from '@/lib/encryption';
@@ -87,7 +87,7 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
 
     // Add user message to chat if it doesn't already exist (frontend may have pre-created it)
     const userMessageId = incomingUserMessageId || new Types.ObjectId().toString();
-    const exists = chat.messages.some((m: any) => m.id === userMessageId);
+    const exists = chat.messages.some((m: Message) => m.id === userMessageId);
     if (!exists) {
       chat.messages.push({
         id: userMessageId,
@@ -117,9 +117,9 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
           if (!isClosed) {
             try {
               controller.enqueue(data);
-            } catch (error: any) {
+            } catch (error: unknown) {
               // Ignore expected controller-closed race condition to avoid noisy logs
-              const msg = error && error.message ? String(error.message) : '';
+              const msg = error instanceof Error ? error.message : '';
               if (!msg.includes('Controller is already closed') && !msg.includes('Cannot enqueue')) {
                 console.error('Error enqueueing data:', error);
               } else {
@@ -138,8 +138,8 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
             isClosed = true;
             try {
               controller.close();
-            } catch (error: any) {
-              const msg = error && error.message ? String(error.message) : '';
+            } catch (error: unknown) {
+              const msg = error instanceof Error ? error.message : '';
               if (!msg.includes('Controller is already closed')) {
                 console.error('Error closing controller:', error);
               } else {
@@ -185,8 +185,8 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
               body: JSON.stringify(fastApiBody),
               signal: AbortSignal.timeout(120_000), // 120s timeout for long LLM responses
             });
-          } catch (fetchError: any) {
-            const msg = fetchError?.message || String(fetchError);
+          } catch (fetchError: unknown) {
+            const msg = fetchError instanceof Error ? fetchError.message : String(fetchError);
             if (msg.includes('fetch failed') || msg.includes('ECONNREFUSED') || msg.includes('timeout')) {
               throw new Error(
                 `Cannot reach FastAPI server at ${endpoint}. ` +
