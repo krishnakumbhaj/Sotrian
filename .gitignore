@@ -1,0 +1,10 @@
+# Ignore Python virtual environments
+Models/env/
+Models/.env
+
+# Ignore QR fraud model file
+
+Models/URL_fraud/url_spam_model.pkl
+Models/QR-Spam/qr_fraud_detection/file_zip/qr_fraud_model.pkl
+# Ignore node modules
+Katalyst/node_modules/
